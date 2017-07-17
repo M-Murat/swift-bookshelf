@@ -76,12 +76,35 @@ class BooksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
     
-    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+   /* public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+        self.startNewSearch()
+    }
+ */
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
         self.startNewSearch()
     }
     
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        var r = self.view.frame
+        r.size.height += 44
+        
+        self.view.frame = r
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.resignFirstResponder()
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-                    self.loadNewPage()
+        self.loadNewPage()
     }
     
     func startNewSearch() {
